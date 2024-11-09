@@ -38,4 +38,173 @@ container runtime k8s can use -> docker shim , crio , containerd
 
 most familiar used k8s distributions -> kubernets , openshift , Rancher , tanzu , EKS , AKS , GKE
 
-Kops - is the tool use to configure/install the kubernetes by our own
+Kops -> helps us to configure and install the k8s cluster by our own
+
+
+
+DAY 2 : 
+
+instead of container we will use pod in k8s
+pod is one or more container
+pod.yml  -> docker run -d --name -v --network
+
+for high availabilty k8s cluster -> 3 master nodes n number of worker nodes
+
+minikube start --memory=4096 --driver=hyperkit
+
+
+simple nginx-pod.yml
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+
+
+Line-by-Line Explanation
+apiVersion: v1
+
+Specifies the Kubernetes API version to use for creating this resource. Here, "v1" indicates this configuration uses the first stable version of the Kubernetes API.
+kind: Pod
+
+Defines the type of Kubernetes object you want to create. "Pod" is the smallest deployable unit in Kubernetes, containing one or more containers.
+metadata:
+
+Provides data to uniquely identify the object, such as its name and labels.
+name: nginx
+
+Under metadata, this assigns the name "nginx" to the Pod. This name must be unique within the namespace where the Pod is created.
+spec:
+
+Defines the desired state of the Pod, specifying the configuration for the containers inside the Pod.
+containers:
+
+A list of container specifications for the Pod. Each item in this list represents a container that will run within this Pod.
+
+- name: nginx
+
+Specifies the name of this container, which is also "nginx". This name is unique within the Pod and can be used to reference the container inside the Pod.
+image: nginx:latest
+
+Specifies the container image to use for this container. Here, it uses the latest version of the official Nginx image from Docker Hub.
+ports:
+
+A list defining the network ports to be exposed by the container.
+
+- containerPort: 80
+
+Specifies that port 80 of this container should be exposed. Port 80 is the default HTTP port, so this configuration allows the Nginx server to handle HTTP traffic within the Pod.
+
+
+
+
+kubectl cluster-info
+kubectl apply -f nginx-pod.yaml
+   # -f is file path
+
+kubectl get pods
+kubectl get pods -o wide
+
+minikube ssh
+curl 10.244.0.4
+
+kubectl describe pod nginx
+kubectl logs nginx
+
+kubectl delete pod nginx
+
+
+Deployment
+
+
+deployment.yml -> replicaset  (k8s controller )  -> pods
+
+deployment solves  the auto healing
+
+controller -> ensures desired state and actual set are same 
+
+if we delete any pod in deployment the new pod will create and old pod will termniate both happens parlally
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+			
+			
+Explanation of the Deployment YAML:
+apiVersion: apps/v1
+
+Specifies the API version, using apps/v1 for Deployments.
+kind: Deployment
+
+Defines the type of resource, which is a Deployment.
+metadata:
+
+Contains metadata for the Deployment itself, such as its name (nginx-deployment).
+spec:
+
+Describes the desired state of the Deployment.
+
+replicas: 3
+
+Specifies the number of Pods to create. Here, it will create 3 replicas of the Nginx Pod.
+selector:
+
+Defines how to identify Pods managed by this Deployment.
+matchLabels:
+Labels that the Deployment will use to identify which Pods it should manage. Here, it targets Pods with the label app: nginx.
+template:
+
+Describes the Pod template that the Deployment will use to create Pods.
+
+metadata:
+
+Adds labels to the Pods created by the Deployment. The label app: nginx is set to match the selector.
+spec:
+
+Defines the Pod specification, similar to the original Pod YAML.
+
+containers:
+
+Specifies the container configuration.
+name: nginx
+The name of the container.
+image: nginx:latest
+Specifies the Nginx image.
+ports:
+Exposes port 80 of the container to allow HTTP traffic.
+
+
+
+
+
+kubectl get deploy
+kubectl get rs
+kubectl get pods
+kubectl get pods -w
+
+kubectl get all
+kubectl get all  -A
