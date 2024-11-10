@@ -208,3 +208,13 @@ kubectl get pods -w
 
 kubectl get all
 kubectl get all  -A
+
+DAY 3 :
+
+services   -> svc
+services is deployed on top of deployment
+services act as load balancer
+problems solved by services
+    load balancing
+    service discovery  -> services focus on labels and selectors name provided while creating the pod instead of focus on ip address
+    Expose to external world
