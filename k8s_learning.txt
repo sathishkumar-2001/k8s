@@ -218,3 +218,36 @@ problems solved by services
     load balancing
     service discovery  -> services focus on labels and selectors name provided while creating the pod instead of focus on ip address
     Expose to external world
+
+
+DAY 4 :
+
+k8s interview questions 
+     diff between docker & k8s
+	 k8s architecture
+	 diff between docker swarm & k8s
+	 diff between docker container & pod
+	 namespace in k8s
+	 role of kube proxy  -> network rules , configure ip tables
+	 types of k8s services
+	 role of kubelet
+	 day 2 day on k8s
+	 
+
+DAY 5 : 
+
+kubeshark -> traffic viewer for k8s
+
+load balancer mode is not supported in minikube
+MetalLB is the  project working on the genertaing the public ip
+
+service discovery is responisble for connecting the deployment pods using selectors & labels
+
+before installing kubeshark we need go , 
+
+sudo apt install golang-go
+git clone https://github.com/kubeshark/kubeshark
+cd kubeshark && make
+kubeshark tap
+kubeshark proxy
+kubeshark clean
