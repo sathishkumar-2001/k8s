@@ -251,3 +251,30 @@ cd kubeshark && make
 kubeshark tap
 kubeshark proxy
 kubeshark clean
+
+
+DAY 6 : 
+
+Ingress 
+Enterprise load balancing capabilities -> ratio based , sticky session , path , domain , whiite listing , black listing
+services is offering load balancer with only round robin mehtod
+
+problems in service 
+     NO Enterprise & TLS load balancer 
+	 we will be createing ip address for each service in load balancer so it will charge a lot
+
+
+for ingress to work first we need to install ingress controller
+
+for installing nginx ingress controller -> minikube addons enable ingress 
+
+
+RBAC 
+
+we can create rbac for users and services 
+
+keyclak
+
+identify managemt
+
+role binding 
