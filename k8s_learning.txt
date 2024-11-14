@@ -278,3 +278,13 @@ keyclak
 identify managemt
 
 role binding 
+
+DAY  7 : 
+  
+Custom Resource  -  CRD 
+
+       CRD -  defining a new type of  resource to API  K8s
+	   CR - created by user in k8s cluster
+	   custom controller 
+	   
+	   CR -> CRD -> custom controller
