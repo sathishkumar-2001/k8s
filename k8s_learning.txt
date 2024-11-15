@@ -271,13 +271,29 @@ for installing nginx ingress controller -> minikube addons enable ingress
 
 RBAC 
 
-we can create rbac for users and services 
+Role-Based Access Control (RBAC) in Kubernetes is a mechanism to regulate access to Kubernetes resources. It allows administrators to define and enforce permissions for users and applications, ensuring that they have access only to the resources they need. RBAC is an important part of Kubernetes security, helping to minimize the risk of unauthorized actions.
 
-keyclak
+Key Concepts of RBAC
+Roles and ClusterRoles:
 
-identify managemt
+Role: Defines permissions within a specific namespace. It grants access to resources like Pods, Services, etc., within that namespace.
+ClusterRole: Defines permissions at the cluster level. It is used for non-namespaced resources (like nodes) or to grant permissions across all namespaces.
+RoleBindings and ClusterRoleBindings:
 
-role binding 
+RoleBinding: Assigns a Role to users, groups, or service accounts within a specific namespace.
+ClusterRoleBinding: Assigns a ClusterRole to users, groups, or service accounts across the entire cluster.
+Subjects: These are the entities to whom roles are granted. Subjects can be:
+
+Users: Human users identified by Kubernetes.
+Groups: A set of users.
+Service Accounts: Accounts used by applications running in the cluster.
+Rules: Each Role or ClusterRole contains rules specifying:
+
+Resources: Kubernetes objects like Pods, Deployments, or ConfigMaps.
+Verbs: Actions that can be performed on resources (e.g., get, list, create, update, delete).
+API Groups: Groupings of Kubernetes APIs.
+
+In Kubernetes, users are not natively managed by the Kubernetes API. Instead, Kubernetes relies on an external mechanism to authenticate users, such as certificates, tokens, or external identity providers (e.g., LDAP, OAuth, etc.). Here's how you can "add" or enable users in a Kubernetes cluster:
 
 DAY  7 : 
   
