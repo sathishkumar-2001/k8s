@@ -307,3 +307,6 @@ Custom Resource  -  CRD
 	   custom controller 
 	   
 	   CR -> CRD -> custom controller
+
+
+
