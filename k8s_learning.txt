@@ -308,5 +308,9 @@ Custom Resource  -  CRD
 	   
 	   CR -> CRD -> custom controller
 
+DAY 8:
+configmaps -> is used to store the secret data that can be used in resources
+secretes -> is used to secure more  sensitive data other addvantage is we use RBAC to secure more
 
+instead of adding the env var using configmaps it is recommended  to do using volummounts
 
