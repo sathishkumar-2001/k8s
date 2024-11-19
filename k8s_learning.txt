@@ -314,3 +314,15 @@ secretes -> is used to secure more  sensitive data other addvantage is we use RB
 
 instead of adding the env var using configmaps it is recommended  to do using volummounts
 
+
+| Feature              | ConfigMaps                        | Secrets                            |
+|----------------------|------------------------------------|------------------------------------|
+| **Purpose**          | Store non-sensitive data          | Store sensitive data               |
+| **Encoding**         | Plain text                        | Base64-encoded                     |
+| **Encryption**       | Not encrypted                     | Can be encrypted with KMS or etcd settings |
+| **Use Case**         | Application configuration          | Sensitive information (e.g., passwords) |
+| **Default Visibility** | Readable in etcd (plain text)     | Encoded in etcd                    |
+
+
+By combining etcd encryption, RBAC, and external secret managers, you can achieve a robust security posture for your Kubernetes secrets. Let me know if you'd like detailed guidance on any specific approach!
+
