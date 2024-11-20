@@ -326,3 +326,19 @@ instead of adding the env var using configmaps it is recommended  to do using vo
 
 By combining etcd encryption, RBAC, and external secret managers, you can achieve a robust security posture for your Kubernetes secrets. Let me know if you'd like detailed guidance on any specific approach!
 
+DAY 9: 
+k8s Deployment strategies
+           default (rolling update)
+		   canary model
+		   Blue / Green 
+		   
+rolling update
+25%
+strategy :
+     maxunavailable
+     maxsurge
+
+Readiness probe -> always keep it ready
+
+
+Canary deplyment
