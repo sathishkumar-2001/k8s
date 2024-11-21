@@ -342,3 +342,8 @@ Readiness probe -> always keep it ready
 
 
 Canary deplyment
+we have the controll 
+
+
+Blue Green deplyment
+Safest but costliest
