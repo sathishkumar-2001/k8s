@@ -1,0 +1,86 @@
+1. Rolling Update
+How it works: Updates pods incrementally, one or a few at a time, until all the old pods are replaced by new ones.
+Pros:
+Minimal downtime since the application remains available during the update.
+Simple and automated by Kubernetes (default deployment strategy).
+Cons:
+If an issue arises, rollback might result in partial downtime.
+Limited control over which users get the updated version.
+Best for:
+Stable applications with predictable behavior.
+Implementation in K8s: Default behavior in kubectl apply or a Deployment resource.
+2. Canary Deployment
+How it works: Gradually routes a small percentage of traffic to the new version while monitoring performance. If stable, traffic to the new version is increased.
+Pros:
+Controlled risk: only a small percentage of users see the new version initially.
+Easier rollback since most traffic remains with the old version.
+Cons:
+Requires traffic-splitting capabilities (e.g., Istio, Linkerd, or custom ingress rules).
+Monitoring and automation are critical for success.
+Best for:
+Testing features in production environments.
+Implementation in K8s: Use service mesh tools (e.g., Istio) or traffic-shifting mechanisms with ingress controllers.
+3. Blue-Green Deployment
+How it works: Maintains two environments (Blue: current version, Green: new version). Traffic is switched to the Green environment once it's verified to be working.
+Pros:
+Zero downtime.
+Easy rollback (just switch back to Blue).
+Cons:
+High resource cost (two full environments running simultaneously).
+Requires careful synchronization of databases and shared resources.
+Best for:
+Critical systems that cannot tolerate any downtime.
+Implementation in K8s: Use separate namespaces or deployments for Blue and Green environments, with a load balancer to switch traffic.
+4. Recreate Deployment
+How it works: Deletes all existing pods before creating new ones.
+Pros:
+Simple to implement.
+Useful when old and new versions cannot run simultaneously.
+Cons:
+Downtime during deployment.
+Best for:
+Non-critical applications or incompatible updates.
+Implementation in K8s: Set strategy: type: Recreate in the deployment spec.
+5. A/B Testing
+How it works: Similar to Canary, but focuses on comparing the performance or user behavior between versions.
+Pros:
+Excellent for feature validation and user behavior testing.
+Cons:
+Requires advanced monitoring and traffic routing.
+Best for:
+Feature experimentation and user engagement analysis.
+Implementation in K8s: Requires integration with analytics tools and traffic management (e.g., Istio).
+6. Shadow Deployment
+How it works: The new version receives a copy of live traffic for testing, but responses are not sent to users.
+Pros:
+Zero risk since live traffic isn't affected.
+Ideal for testing performance or load scenarios.
+Cons:
+Requires duplication of resources for the new version.
+Monitoring and logging systems must handle duplicate traffic.
+Best for:
+Validating behavior under live traffic without user impact.
+Implementation in K8s: Use a service mesh or ingress controllers to duplicate traffic to the shadow deployment.
+7. Progressive Delivery (Feature Flags)
+How it works: Feature toggles control which users see new functionality. Code for both versions exists, but toggles enable gradual rollout.
+Pros:
+Extremely granular control over feature exposure.
+Quick rollback by disabling the feature flag.
+Cons:
+Increased complexity in application code.
+Requires feature management tooling (e.g., LaunchDarkly, Flagsmith).
+Best for:
+Testing new features at user-level granularity.
+Implementation in K8s: Not directly Kubernetes-specific, but works well with Canary or Blue-Green setups.
+
+
+| **Strategy**          | **Downtime** | **Resource Cost** | **Traffic Management Needed?** | **Rollback Simplicity** | **Use Case**                           |
+|------------------------|--------------|-------------------|----------------------------------|--------------------------|----------------------------------------|
+| Rolling Update         | Low          | Low               | No                               | Moderate                 | Standard updates                       |
+| Canary Deployment      | Very Low     | Moderate          | Yes                              | Easy                     | Gradual rollout of features            |
+| Blue-Green Deployment  | Zero         | High              | Yes                              | Easy                     | Critical systems, zero-downtime needs  |
+| Recreate Deployment    | High         | Low               | No                               | Moderate                 | Incompatible updates                   |
+| A/B Testing            | Zero         | Moderate          | Yes                              | Moderate                 | Feature validation                     |
+| Shadow Deployment      | Zero         | High              | Yes                              | Not applicable           | Performance/load testing               |
+| Progressive Delivery   | Zero         | Moderate          | No                               | Very Easy                | User-level feature experimentation     |
+
